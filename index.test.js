@@ -18,26 +18,47 @@ describe('Restaurant and Menu Models', () => {
 
     test('can create a Restaurant', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const restaurant = await Restaurant.create({
+      name: 'Pizza Palace',
+      address: '123 Main St',
+      phone: '555-1234',
+      website: 'http://pizzapalace.com',
     });
+    expect(restaurant.id).toBeDefined();
+    expect(restaurant.name).toBe('Pizza Palace');
+  });
 
     test('can create a Menu', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const restaurant = await Restaurant.findOne({ where: { name: 'Pizza Palace' } });
+    const menu = await Menu.create({
+      title: 'Pizza Menu',
+      description: 'Our famous pizza menu',
+      RestaurantId: restaurant.id,
     });
+    expect(menu.id).toBeDefined();
+    expect(menu.title).toBe('Pizza Menu');
+  });
 
     test('can find Restaurants', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
-    });
+      const restaurants = await Restaurant.findAll();
+    expect(restaurants.length).toBeGreaterThan(0);
+  });
 
     test('can find Menus', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
-    });
+       const menus = await Menu.findAll();
+    expect(menus.length).toBeGreaterThan(0);
+  });
 
     test('can delete Restaurants', async () => {
         // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
-    });
-})
+       const restaurant = await Restaurant.findOne({ where: { name: 'Pizza Palace' } });
+    await restaurant.destroy();
+    const deletedRestaurant = await Restaurant.findOne({ where: { name: 'Pizza Palace' } });
+    expect(deletedRestaurant).toBeNull();
+  });
+});
+
+
