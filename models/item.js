@@ -1,10 +1,23 @@
-class Item {
-  constructor(name, image, price, vegetarian) {
-    this.name = name;
-    this.image = image;
-    this.price = price;
-    this.vegetarian = vegetarian;
-  }
-}
+const {sequelize} = require('../db');
+const { Sequelize } = require('sequelize');
 
-export default Item;
+const Item = sequelize.define('Item', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  price: {
+    type: DataTypes.NUM,
+    allowNull: false
+  },
+  vegetarian: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  }
+});
+
+module.exports = {Item};
